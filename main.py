@@ -1,7 +1,6 @@
 import tkinter as tk
 from data.user_data import get_user_data, get_user_id
 from data.database import user_repo, UserRepository
-import datetime
 
 def add_btn():
     root = tk.Tk()
