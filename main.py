@@ -15,7 +15,7 @@ def add_btn():
     email_label.pack(pady=5)
     email_entry = tk.Entry(root)
     email_entry.pack(pady=5)
-    add_button = tk.Button(root, text="Add User", command=lambda: get_user_data(name_entry.get(), email_entry.get()))
+    add_button = tk.Button(root, text="Add User", command=lambda: get_user_data(name_entry.get(), email_entry.get()), bg="lightblue")
     add_button.pack(pady=20)
     root.mainloop()
 
