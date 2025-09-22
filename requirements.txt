@@ -1,0 +1,2 @@
+tkinter --->  tk
+sqlite3 --->  sql
