@@ -1,6 +1,6 @@
 # DATABASE Operations With OOP
 import sqlite3
-from user_data import get_user_data, get_user_id
+from user_data.user_data import get_user_data, get_user_id
 
 DB_PATH = "database.db"
 

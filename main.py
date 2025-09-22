@@ -1,6 +1,6 @@
 import tkinter as tk
-from data.user_data import get_user_data, get_user_id
-from data.database import  UserRepository, DB_PATH
+from user_data.user_data import get_user_data, get_user_id
+from database.database import  UserRepository, DB_PATH
 
 def add_btn():
     root = tk.Tk()
