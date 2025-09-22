@@ -65,8 +65,10 @@ def delete_user():
             error_label.pack(pady=5)
             return
         user_repo.delete(user_id)
-            success_label = tk.Label(root, text="User deleted successfully!", fg="green", bg='#f0f0f0')
-            success_label.pack(pady=5)    delete_button = tk.Button(root, text="Delete User", command=on_delete, bg="lightcoral")
+        success_label = tk.Label(root, text="User deleted successfully!", fg="green")
+        success_label.pack(pady=5)
+
+    delete_button = tk.Button(root, text="Delete User", command=on_delete, bg="lightcoral")
     delete_button.pack(pady=20)
 
     root.mainloop() 
@@ -87,7 +89,7 @@ def clear_database(refresh_callback=None):
         confirm = messagebox.askyesno("Confirm Clear", "Are you sure you want to delete ALL users?\nThis cannot be undone!")
         if confirm:
             user_repo.clear_all()
-            success_label = tk.Label(root, text="Database cleared successfully!", fg="green", bg='#f0f0f0')
+            success_label = tk.Label(root, text="Database cleared successfully!", fg="green")
             success_label.pack(pady=5)
             if refresh_callback:
                 refresh_callback()
