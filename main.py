@@ -1,7 +1,7 @@
 import tkinter as tk
 from data.user_data import get_user_data, get_user_id
 from data.database import user_repo, UserRepository
-
+import datetime
 
 def add_btn():
     root = tk.Tk()
@@ -26,7 +26,12 @@ def add_btn():
 def user_operation():
     root = tk.Tk()
     root.title("user")
-    root.geometry("300x300")
+    root.geometry("300x600")
+
+    recents_label = tk.Label(root, text="Recent Users:")
+    recents_label.pack(pady=5)
+    recent_users_list = tk.Listbox(root)
+    recent_users_list.pack(pady=5)
 
     add = tk.Button(root, text="Add a new user", width=20, bg="lightgreen", command=add_btn)
     add.pack(pady=20)
