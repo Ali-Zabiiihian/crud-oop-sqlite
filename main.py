@@ -11,8 +11,10 @@ def user_operation():
     add.pack(pady=20)
     delete = tk.Button(root, text="Delete a user", width=20, bg="red")
     delete.pack(pady=20)
-    find = tk.Button(root, text="Find a user", width=20, bg="lightcoral")
+    find = tk.Button(root, text="Find a user", width=20, bg="pink")
     find.pack(pady=20)
+    update = tk.Button(root, text="Update a user", width=20, bg="lightcoral")
+    update.pack(pady=20)
     root.mainloop()
 
 
