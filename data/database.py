@@ -45,4 +45,3 @@ class UserRepository:
             cursor.execute(query, (user_id,))
 
 
-user_repo = UserRepository(DB_PATH)

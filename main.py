@@ -1,6 +1,6 @@
 import tkinter as tk
 from data.user_data import get_user_data, get_user_id
-from data.database import user_repo, UserRepository
+from data.database import  UserRepository, DB_PATH
 
 def add_btn():
     root = tk.Tk()
@@ -16,6 +16,9 @@ def add_btn():
     email_entry.pack(pady=5)
     add_button = tk.Button(root, text="Add User", command=lambda: get_user_data(name_entry.get(), email_entry.get()), bg="lightblue")
     add_button.pack(pady=20)
+
+    user_repo = UserRepository(DB_PATH)
+    user_repo.create({"name": name_entry.get(), "email": email_entry.get()})
     root.mainloop()
 
 
