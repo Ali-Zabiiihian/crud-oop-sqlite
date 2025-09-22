@@ -24,6 +24,7 @@ def add_btn():
     if user_repo.create({"name": name_entry.get(), "email": email_entry.get()}):
         success_label = tk.Label(root, text="User added successfully!", fg="green")
         success_label.pack(pady=5)
+        success_msg = success_label.config(text="User added successfully!")
 
     root.mainloop()
 
