@@ -20,9 +20,10 @@ def add_btn():
     user_repo = UserRepository(DB_PATH)
     user_repo.create({"name": name_entry.get(), "email": email_entry.get()})
 
-    # message after the add was succesfull
-    success_label = tk.Label(root, text="User added successfully!", fg="green")
-    success_label.pack(pady=5)
+    # message if the add was succesfull
+    if user_repo.create({"name": name_entry.get(), "email": email_entry.get()}):
+        success_label = tk.Label(root, text="User added successfully!", fg="green")
+        success_label.pack(pady=5)
 
     root.mainloop()
 
