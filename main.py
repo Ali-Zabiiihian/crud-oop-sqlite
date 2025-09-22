@@ -3,7 +3,7 @@ from tkinter import messagebox
 from database.database import UserRepository, DB_PATH
 
 
-def add_btn():
+def add_btn(update_listbox_callback=None):
     root = tk.Tk()
     root.title("Add User")
     root.geometry("300x500")
@@ -33,6 +33,11 @@ def add_btn():
             # clear fields after successful add
             name_entry.delete(0, tk.END)
             email_entry.delete(0, tk.END)
+            # update the main window's listbox
+            if update_listbox_callback:
+                update_listbox_callback()
+            # close the add window after 1 second
+            root.after(1000, root.destroy)
 
     add_button = tk.Button(root, text="Add User", command=on_add, bg="lightblue")
     add_button.pack(pady=20)
@@ -67,7 +72,7 @@ def delete_user():
     root.mainloop() 
 
 
-def clear_database():
+def clear_database(refresh_callback=None):
     root = tk.Tk()
     root.title("Clear Database")
     root.geometry("300x200")
@@ -83,6 +88,8 @@ def clear_database():
             user_repo.clear_all()
             success_label = tk.Label(root, text="Database cleared successfully!", fg="green")
             success_label.pack(pady=5)
+            if refresh_callback:
+                refresh_callback()
             root.after(2000, root.destroy)  # close window after 2 seconds
         
     clear_button = tk.Button(root, text="Clear All Data", command=on_clear, bg="red", fg="white")
@@ -95,24 +102,51 @@ def clear_database():
 
 def user_operation():
     root = tk.Tk()
-    root.title("user")
+    root.title("User Management")
     root.geometry("300x600")
 
-    recents_label = tk.Label(root, text="Recent Users:")
+    # Create frame for users list
+    list_frame = tk.Frame(root)
+    list_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
+    
+    recents_label = tk.Label(list_frame, text="Recent Users:")
     recents_label.pack(pady=5)
-    recent_users_list = tk.Listbox(root)
-    recent_users_list.pack(pady=5)
-
-    add = tk.Button(root, text="Add a new user", width=20, bg="lightgreen", command=add_btn)
-    add.pack(pady=20)
-    delete = tk.Button(root, text="Delete a user", width=20, bg="red", command=delete_user)
-    delete.pack(pady=20)
-    update = tk.Button(root, text="Update a user", width=20, bg="coral")
-    update.pack(pady=20)
-    find = tk.Button(root, text="Find a user", width=20, bg="pink")
-    find.pack(pady=20)
-    clear = tk.Button(root, text="Clear Database", width=20, bg="darkred", fg="white", command=clear_database)
-    clear.pack(pady=20)
+    
+    recent_users_list = tk.Listbox(list_frame, width=40, height=10)
+    recent_users_list.pack(fill=tk.BOTH, expand=True, pady=5)
+    
+    user_repo = UserRepository(DB_PATH)
+    
+    def refresh_users_list():
+        recent_users_list.delete(0, tk.END)  # Clear current list
+        users = user_repo.get_all_users()
+        for user in users:
+            recent_users_list.insert(tk.END, f"{user[1]} (ID: {user[0]})")  # Display name and ID
+    
+    # Initial population of the list
+    refresh_users_list()
+    
+    # Button frame
+    button_frame = tk.Frame(root)
+    button_frame.pack(fill=tk.X, padx=10, pady=5)
+    
+    add = tk.Button(button_frame, text="Add a new user", width=20, bg="lightgreen", 
+                   command=lambda: add_btn(refresh_users_list))
+    add.pack(pady=10)
+    
+    delete = tk.Button(button_frame, text="Delete a user", width=20, bg="red", 
+                      command=delete_user)
+    delete.pack(pady=10)
+    
+    update = tk.Button(button_frame, text="Update a user", width=20, bg="coral")
+    update.pack(pady=10)
+    
+    find = tk.Button(button_frame, text="Find a user", width=20, bg="pink")
+    find.pack(pady=10)
+    
+    clear = tk.Button(button_frame, text="Clear Database", width=20, bg="darkred", 
+                     fg="white", command=lambda: clear_database(refresh_users_list))
+    clear.pack(pady=10)
     
     root.mainloop()
 

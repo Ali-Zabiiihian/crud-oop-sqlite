@@ -55,4 +55,11 @@ class UserRepository:
             cursor.execute(query)
             conn.commit()
             return True
+            
+    def get_all_users(self):
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            query = "SELECT * FROM users ORDER BY id DESC"  # Most recent first
+            cursor.execute(query)
+            return cursor.fetchall()
 
