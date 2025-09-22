@@ -1,6 +1,6 @@
 import tkinter as tk
-from user_data.user_data import get_user_data, get_user_id
-from database.database import  UserRepository, DB_PATH
+from database.database import UserRepository, DB_PATH
+
 
 def add_btn():
     root = tk.Tk()
@@ -14,17 +14,27 @@ def add_btn():
     email_label.pack(pady=5)
     email_entry = tk.Entry(root)
     email_entry.pack(pady=5)
-    add_button = tk.Button(root, text="Add User", command=lambda: get_user_data(name_entry.get(), email_entry.get()), bg="lightblue")
-    add_button.pack(pady=20)
 
     user_repo = UserRepository(DB_PATH)
-    user_repo.create({"name": name_entry.get(), "email": email_entry.get()})
 
-    # message if the add was succesfull
-    if user_repo.create({"name": name_entry.get(), "email": email_entry.get()}):
-        success_label = tk.Label(root, text="User added successfully!", fg="green")
-        success_label.pack(pady=5)
-        success_msg = success_label.config(text="User added successfully!")
+    def on_add():
+        name = name_entry.get().strip()
+        email = email_entry.get().strip()
+        # basic validation
+        if not name or not email:
+            error_label = tk.Label(root, text="Please enter name and email", fg="red")
+            error_label.pack(pady=5)
+            return
+        user_id = user_repo.create({"name": name, "email": email})
+        if user_id:
+            success_label = tk.Label(root, text="User added successfully! (id={})".format(user_id), fg="green")
+            success_label.pack(pady=5)
+            # clear fields after successful add
+            name_entry.delete(0, tk.END)
+            email_entry.delete(0, tk.END)
+
+    add_button = tk.Button(root, text="Add User", command=on_add, bg="lightblue")
+    add_button.pack(pady=20)
 
     root.mainloop()
 
