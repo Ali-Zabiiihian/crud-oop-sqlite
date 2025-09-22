@@ -5,7 +5,7 @@ from database.database import  UserRepository, DB_PATH
 def add_btn():
     root = tk.Tk()
     root.title("Add User")
-    root.geometry("300x300")
+    root.geometry("300x500")
     name_label = tk.Label(root, text="Name:")
     name_label.pack(pady=5)
     name_entry = tk.Entry(root)
@@ -19,6 +19,11 @@ def add_btn():
 
     user_repo = UserRepository(DB_PATH)
     user_repo.create({"name": name_entry.get(), "email": email_entry.get()})
+
+    # message after the add was succesfull
+    success_label = tk.Label(root, text="User added successfully!", fg="green")
+    success_label.pack(pady=5)
+
     root.mainloop()
 
 
