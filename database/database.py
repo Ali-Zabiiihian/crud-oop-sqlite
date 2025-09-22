@@ -46,6 +46,13 @@ class UserRepository:
             query = "DELETE FROM users WHERE id = ?"
             cursor.execute(query, (user_id,))
             conn.commit()
-            conn.close()
 
+    # clear all records
+    def clear_all(self):
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            query = "DELETE FROM users"
+            cursor.execute(query)
+            conn.commit()
+            return True
 
