@@ -7,7 +7,8 @@ def add_btn(update_listbox_callback=None):
     root = tk.Tk()
     root.title("Add User")
     root.geometry("300x500")
-    name_label = tk.Label(root, text="Name:")
+    root.configure(bg='#f0f0f0')  # Light grey background
+    name_label = tk.Label(root, text="Name:", bg='#f0f0f0')
     name_label.pack(pady=5)
     name_entry = tk.Entry(root)
     name_entry.pack(pady=5)
@@ -23,12 +24,12 @@ def add_btn(update_listbox_callback=None):
         email = email_entry.get().strip()
         # basic validation
         if not name or not email:
-            error_label = tk.Label(root, text="Please enter name and email", fg="red")
+            error_label = tk.Label(root, text="Please enter name and email", fg="red", bg='#f0f0f0')
             error_label.pack(pady=5)
             return
         user_id = user_repo.create({"name": name, "email": email})
         if user_id:
-            success_label = tk.Label(root, text="User added successfully! (id={})".format(user_id), fg="green")
+            success_label = tk.Label(root, text="User added successfully! (id={})".format(user_id), fg="green", bg='#f0f0f0')
             success_label.pack(pady=5)
             # clear fields after successful add
             name_entry.delete(0, tk.END)
@@ -49,7 +50,8 @@ def delete_user():
     root = tk.Tk()
     root.title("Delete User")
     root.geometry("300x200")
-    label = tk.Label(root, text="Enter User ID to delete:")
+    root.configure(bg='#f0f0f0')  # Light grey background
+    label = tk.Label(root, text="Enter User ID to delete:", bg='#f0f0f0')
     label.pack(pady=5)
     entry = tk.Entry(root)
     entry.pack(pady=5)
@@ -59,14 +61,12 @@ def delete_user():
     def on_delete():
         user_id = entry.get().strip()
         if not user_id:
-            error_label = tk.Label(root, text="Please enter a user ID", fg="red")
+            error_label = tk.Label(root, text="Please enter a user ID", fg="red", bg='#f0f0f0')
             error_label.pack(pady=5)
             return
         user_repo.delete(user_id)
-        success_label = tk.Label(root, text="User deleted successfully!", fg="green")
-        success_label.pack(pady=5)
-
-    delete_button = tk.Button(root, text="Delete User", command=on_delete, bg="lightcoral")
+            success_label = tk.Label(root, text="User deleted successfully!", fg="green", bg='#f0f0f0')
+            success_label.pack(pady=5)    delete_button = tk.Button(root, text="Delete User", command=on_delete, bg="lightcoral")
     delete_button.pack(pady=20)
 
     root.mainloop() 
@@ -76,8 +76,9 @@ def clear_database(refresh_callback=None):
     root = tk.Tk()
     root.title("Clear Database")
     root.geometry("300x200")
+    root.configure(bg='#f0f0f0')  # Light grey background
     
-    warning_label = tk.Label(root, text="⚠️ Warning: This will delete ALL users!", fg="red")
+    warning_label = tk.Label(root, text="⚠️ Warning: This will delete ALL users!", fg="red", bg='#f0f0f0')
     warning_label.pack(pady=10)
     
     user_repo = UserRepository(DB_PATH)
@@ -86,7 +87,7 @@ def clear_database(refresh_callback=None):
         confirm = messagebox.askyesno("Confirm Clear", "Are you sure you want to delete ALL users?\nThis cannot be undone!")
         if confirm:
             user_repo.clear_all()
-            success_label = tk.Label(root, text="Database cleared successfully!", fg="green")
+            success_label = tk.Label(root, text="Database cleared successfully!", fg="green", bg='#f0f0f0')
             success_label.pack(pady=5)
             if refresh_callback:
                 refresh_callback()
@@ -104,12 +105,13 @@ def user_operation():
     root = tk.Tk()
     root.title("User Management")
     root.geometry("300x600")
+    root.configure(bg='#f0f0f0')  # Light grey background
 
     # Create frame for users list
-    list_frame = tk.Frame(root)
+    list_frame = tk.Frame(root, bg='#f0f0f0')
     list_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
     
-    recents_label = tk.Label(list_frame, text="Recent Users:")
+    recents_label = tk.Label(list_frame, text="Recent Users:", bg='#f0f0f0')
     recents_label.pack(pady=5)
     
     recent_users_list = tk.Listbox(list_frame, width=40, height=10)
@@ -127,7 +129,7 @@ def user_operation():
     refresh_users_list()
     
     # Button frame
-    button_frame = tk.Frame(root)
+    button_frame = tk.Frame(root, bg='#f0f0f0')
     button_frame.pack(fill=tk.X, padx=10, pady=5)
     
     add = tk.Button(button_frame, text="Add a new user", width=20, bg="lightgreen", 
